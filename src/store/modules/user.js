@@ -1,4 +1,4 @@
-import server from '../../helpers/server';
+import AuthService from '../../services/authService';
 
 const state = {
   status: '',
@@ -15,30 +15,44 @@ const getters = {
 }
 
 const actions = {
-  async login({commit}, userItem){
+  async signup({commit}, userData){
     try {
-        commit('authRequest');
-        const userData = await server.post(`login`, userItem);
-        const { username, token } = userData.data.data;
-        localStorage.setItem('token', token);
-        commit('authSuccess', { token, username });
-        console.log(userData.data.data.token);
+      commit('authRequest');
+      const userResponse = await AuthService.signup(userData);
+      commit('authSuccess', userResponse);
+      return Promise.resolve(userResponse);
     } catch (error) {
-        commit('authError')
-        localStorage.removeItem('token')
+      commit('authError');
+      localStorage.removeItem('token');
+      return Promise.reject(error);
     }
   },
+
+  async login({commit}, userData){
+    try {
+      commit('authRequest');
+      const userResponse = await AuthService.login(userData);
+      commit('authSuccess', userResponse);
+      return Promise.resolve(userResponse);
+    } catch (error) {
+      commit('authError');
+      localStorage.removeItem('token');
+      return Promise.reject(error);
+    }
+  },
+
   async profile({commit}){
     try {
-        const userData = await server.get(`profile`);
-        commit('setUser', userData.data.data.username);
+      const userResponse = await AuthService.profile();
+      commit('setUser', userResponse);
     } catch (error) {
-        commit('authError')
+      commit('authError')
     }
 },
 logout({ commit }) {
-      commit('logout')
-      localStorage.removeItem('token')
+    commit('logout')
+    AuthService.logout();
+    return Promise.resolve();
 }
 
 }
