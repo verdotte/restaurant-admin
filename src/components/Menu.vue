@@ -14,7 +14,7 @@
           Alimento
         </q-toolbar-title>
         <div class="text-user text-grey">
-          verdotte
+          {{getProfile.username}}
         </div>
       </q-toolbar>
     </q-header>
@@ -56,7 +56,7 @@
           </q-item-section>
         </q-item>
         <q-separator spaced />
-        <q-item clickable>
+        <q-item clickable @click="signOut()">
           <q-item-section avatar>
             <q-icon name="logout" />
           </q-item-section>
@@ -105,13 +105,26 @@
 }
 </style>
 <script>
+import { mapActions, mapGetters } from 'vuex';
 export default {
   name: 'Menu',
-  props: ['item'],
   data () {
     return {
       leftDrawerOpen: this.$q.platform.is.desktop
     }
+  },
+  methods:{
+    ...mapActions('user',['logout', 'profile']),
+    signOut(){
+      this.logout()
+      .then(() => this.$router.push('/login'))
+    }
+  },
+  computed: {
+    ...mapGetters('user',['getProfile'])
+  },
+  created(){
+    this.profile();
   }
 }
 </script>

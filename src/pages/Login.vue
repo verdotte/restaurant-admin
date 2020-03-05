@@ -5,7 +5,7 @@
                 <div class="logo">
                   <h3 class="my-header">Welcome to Alimento</h3>
                   <p>Sign in to continue</p>
-              </div>
+                </div>
                 <div class="q-pa-md">
                   <q-input
                     outlined
@@ -21,7 +21,13 @@
                     class="field"
                     :rules="[val => !!val || 'Field is required']"
                   />
-                  <q-btn class="add" label="Login"  color="red"/>
+                  <q-spinner
+                    v-if="loading"
+                    color="red"
+                    size="4em"
+                    :thickness="5"
+                  />
+                  <q-btn v-else  @click="signIn()" class="add" label="Login"  color="red"/>
                 </div>
             </div>
         </div>
@@ -87,12 +93,35 @@ input[type="file"] {
 
 </style>
 <script>
+import { mapActions, mapGetters } from 'vuex';
+import { toast } from '../helpers/notifier';
 export default {
-    data(){
-        return{
-            username: '',
-            password: '',
+    name: 'Login',
+    data: () => ({
+        username: '',
+        password: '',
+        loading: false
+    }),
+    methods: {
+        ...mapActions('user',['login']),
+        signIn(){
+            this.loading = true;
+            const { username, password, login } = this;
+            login({ username, password })
+            .then(() => this.$router.push('/'))
+            .catch(() => {
+                toast(this.$q, 'username or password incorrect','red', 'bottom')
+                this.loading = false;
+            });
         }
-    }
+    },
+    created(){
+        if (this.isLoggin){
+        this.$router.push('/');
+        }
+   },
+    computed: {
+        ...mapGetters('user',['isLoggin'])
+    },
 }
 </script>

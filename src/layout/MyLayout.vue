@@ -1,6 +1,6 @@
 <template>
   <q-layout class="my-font" view="lHh Lpr lFf">
-    <Header :item="msg"/>
+    <Menu/>
     <q-page-container>
         <q-page>
           <router-view />
@@ -17,16 +17,12 @@
 }
 </style>
 <script>
-import Header from '@/components/Menu.vue';
+import Menu from '@/components/Menu.vue';
 export default {
   components: {
-     Header,
+     Menu,
   },
   data: () => ({
-    msg: {
-      name: 'verdotte',
-      age: 20,
-    }
   })
 }
 </script>
