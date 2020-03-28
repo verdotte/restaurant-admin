@@ -21,7 +21,7 @@
 
     <q-drawer v-model="leftDrawerOpen">
       <q-list class="side-bar my-header">
-        <q-btn class="btn-add" size="17px" rounded to="/add" label="Add Restaurant" color="red" text-color="white"/>
+        <q-btn class="btn-add" size="17px" rounded to="/add" label="Add Food" color="red" text-color="white"/>
         <q-item clickable >
           <q-item-section avatar>
             <q-icon name="restaurant" />
