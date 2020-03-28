@@ -29,6 +29,8 @@ import {
   ClosePopup,
   Notify,
   QSpinner,
+  QAvatar,
+  QImg,
 } from 'quasar'
 
 Vue.use(Quasar, {
@@ -57,6 +59,8 @@ Vue.use(Quasar, {
     QPageSticky,
     QDialog,
     QSpinner,
+    QAvatar,
+    QImg,
   },
   directives: {
     ClosePopup,
