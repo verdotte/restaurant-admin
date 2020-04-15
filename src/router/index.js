@@ -6,6 +6,7 @@ import Login from '../pages/Login.vue'
 import About from '../pages/About.vue'
 import MyLayout from '../layout/MyLayout.vue'
 import FoodList from '../pages/FoodList.vue';
+import Error from '../pages/Error.vue'
 
 
 Vue.use(VueRouter)
@@ -39,6 +40,11 @@ const routes = [
     path: '/login',
     name: 'Login',
     component: Login,
+  },
+  {
+    path: '*',
+    name: 'Error',
+    component: Error,
   }
 ];
 
