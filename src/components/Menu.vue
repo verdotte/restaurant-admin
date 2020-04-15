@@ -21,8 +21,8 @@
 
     <q-drawer v-model="leftDrawerOpen">
       <q-list class="side-bar my-header">
-        <q-btn class="btn-add" size="17px" rounded to="/add" label="Add Food" color="red" text-color="white"/>
-        <q-item clickable >
+        <q-btn class="btn-add" size="17px" rounded @click="displayDialog()" label="Add Food" color="red" text-color="white"/>
+        <q-item clickable :active="link === 'restaurant'" @click="openLink('restaurant')" active-class="link">
           <q-item-section avatar>
             <q-icon name="restaurant" />
           </q-item-section>
@@ -30,29 +30,29 @@
             <q-item-label>Restaurant</q-item-label>
           </q-item-section>
         </q-item>
-        <q-item clickable>
+        <q-item clickable :active="link === 'food'" @click="openLink('food')" active-class="link">
           <q-item-section avatar>
-            <q-icon name="restaurant_menu" />
+            <q-icon name="restaurant_menu"/>
           </q-item-section>
           <q-item-section>
             <q-item-label>Food</q-item-label>
           </q-item-section>
         </q-item>
-        <q-item clickable>
+        <q-item clickable :active="link === 'order'" @click="openLink('order')" active-class="link">
           <q-item-section avatar>
             <q-icon name="shopping_cart" />
           </q-item-section>
           <q-item-section>
-            <q-item-label>Incoming Orders</q-item-label>
+            <q-item-label>Incoming Order</q-item-label>
             <q-badge class="badge" color="red" floating>10</q-badge>
           </q-item-section>
         </q-item>
-        <q-item clickable>
+        <q-item clickable :active="link === 'stats'" @click="openLink('stats')" active-class="link">
           <q-item-section avatar>
             <q-icon name="shop" />
           </q-item-section>
           <q-item-section>
-            <q-item-label>Processed Orders</q-item-label>
+            <q-item-label>Statistics</q-item-label>
           </q-item-section>
         </q-item>
         <q-separator spaced />
@@ -66,10 +66,11 @@
         </q-item>
       </q-list>
     </q-drawer>
+    <AddFood :dataDialog.sync="dialog"/>
   </div>
 </template>
 
-<style>
+<style scoped>
 .btn-add{
   color: white;
   font-size: 20px;
@@ -101,23 +102,40 @@
 .text-user{
   font-size: 16px;
   font-weight: bold;
-
+}
+.link{
+  background-color: #E0E0E0;
+  color: black;
 }
 </style>
 <script>
+import AddFood from '@/components/AddFood.vue';
 import { mapActions, mapGetters } from 'vuex';
 export default {
   name: 'Menu',
+  components: {
+    AddFood
+  },
   data () {
     return {
-      leftDrawerOpen: this.$q.platform.is.desktop
+      leftDrawerOpen: this.$q.platform.is.desktop,
+      dialog: false,
+      link: 'restaurant',
     }
   },
   methods:{
     ...mapActions('user',['logout', 'profile']),
+    ...mapActions('food',['getFood']),
     signOut(){
       this.logout()
       .then(() => this.$router.push('/login'))
+    },
+    displayDialog(){
+      this.dialog = true;
+    },
+    openLink(linkName){
+      this.link = linkName;
+      linkName === 'restaurant' ? this.$router.push('/') : this.$router.push(`${linkName}`);
     }
   },
   computed: {
@@ -125,6 +143,13 @@ export default {
   },
   created(){
     this.profile();
-  }
+  },
+  watch: {
+    'dialog': function (newValue) {
+      if(!newValue){
+        this.getFood();
+      }
+    }
+  },
 }
 </script>
