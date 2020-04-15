@@ -31,6 +31,7 @@ import {
   QSpinner,
   QAvatar,
   QImg,
+  QSelect
 } from 'quasar'
 
 Vue.use(Quasar, {
@@ -61,6 +62,7 @@ Vue.use(Quasar, {
     QSpinner,
     QAvatar,
     QImg,
+    QSelect
   },
   directives: {
     ClosePopup,
