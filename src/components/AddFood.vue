@@ -62,12 +62,6 @@
   text-align: center;
   font-family: 'Raleway';
 }
-.add-img{
-    background: red;
-    color: #fff;
-    margin-top: 40px;
-    right: 20px;
-}
 .add{
   width: 100%;
   font-size: 18px;

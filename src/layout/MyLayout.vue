@@ -41,7 +41,7 @@ export default {
   watch: {
     'dialog': function (newValue) {
       if(!newValue){
-        this.getRestaurant()
+        this.getRestaurant();
       }
     }
   },

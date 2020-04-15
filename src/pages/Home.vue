@@ -10,12 +10,15 @@
           />
           <q-card-section class="q-pt-none">
             <div class="col text-h6 ellipsis">
+              <q-icon name="restaurant" class="icon-style"/>
               {{ restaurant.restaurantName }}
             </div>
-            <div class="txt text-subtitle1">
+            <div class=" text-subtitle1">
+              <q-icon name="place" class="icon-style"/>
               {{ restaurant.restaurantAddress }}
             </div>
             <div class="txt text-subtitle1 text-grey">
+              <q-icon name="phone" class="icon-style"/>
               {{ restaurant.restaurantContact }}
             </div>
           </q-card-section>
@@ -62,6 +65,11 @@
   justify-content: center;
   align-items: center;
   text-align: center;
+}
+.icon-style{
+    color: red;
+    font-size: 1.3em;
+    margin-right: 5px;
 }
 </style>
 
